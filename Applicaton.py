@@ -1,27 +1,28 @@
 import streamlit as st
-import numpy as np
 import joblib
-# Load the trained model
+import numpy as np
 
-model = joblib.load("student_performance_predictor.pkl")
+# Load the saved ML model
+model = joblib.load("model.pkl")
 
-# Streamlit App UI
-st.title("📚 Student Performance Predictor")
+# Streamlit App Title
+st.title("📊 Student Performance Predictor")
+st.write("Enter the details below to predict student performance.")
 
-st.markdown("### Enter Student Details:")
-
-# Input fields
+# Input Fields with Range Constraints
 hours_studied = st.slider("Hours Studied", 1, 9, 5)
 previous_scores = st.slider("Previous Scores", 40, 99, 70)
-extracurricular = st.radio("Extracurricular Activities (0 = No, 1 = Yes)", [0, 1])
-sleep_hours = st.slider("Sleep Hours", 4, 9, 6)
+extracurricular = st.radio("Extracurricular Activities", [0, 1])
+sleep_hours = st.slider("Sleep Hours", 4, 9, 7)
 sample_papers = st.slider("Sample Question Papers Practiced", 10, 100, 50)
 
-# Prediction
+# Predict Button
 if st.button("Predict Performance"):
+    # Prepare input data for prediction
     input_data = np.array([[hours_studied, previous_scores, extracurricular, sleep_hours, sample_papers]])
-    prediction = model.predict(input_data)[0]
-    st.success(f"📊 Predicted Performance: {prediction:.2f}")
+    prediction = model.predict(input_data)
+    
+    # Display Prediction
+    st.success(f"Predicted Performance Score: {prediction[0]:.2f}")
 
-st.markdown("---")
-st.markdown("💡 Adjust the inputs and click **Predict Performance** to see the results.")
+
