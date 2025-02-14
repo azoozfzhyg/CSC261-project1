@@ -1,10 +1,9 @@
 import streamlit as st
-import pickle
 import numpy as np
-
+import joblib
 # Load the trained model
-with open('model.pkl', "rb") as file:
-    model = pickle.load(file)
+
+model = joblib.load("student_performance_predictor.pkl")
 
 # Streamlit App UI
 st.title("📚 Student Performance Predictor")
