@@ -24,5 +24,3 @@ if st.button("Predict Performance"):
     
     # Display Prediction
     st.success(f"Predicted Performance Score: {prediction[0]:.2f}")
-
-
